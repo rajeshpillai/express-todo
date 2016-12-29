@@ -1,0 +1,35 @@
+<html>
+    <head>
+        <title>My Awesome Todo App</title>
+        <link rel="stylesheet" href="style.css"/>
+        <script src="main.js"></script>
+
+    </head>
+
+    <body>
+        <h2>Todo App</h2>
+
+        <form action="/todos" method="POST"> 
+            <input type="text" placeholder="name" 
+                name="name"> 
+            <input type="text" placeholder="new todo" 
+                name="todo"> 
+            <button type="submit">Submit</button> 
+        </form>
+
+        <ul class="todos"> 
+            <% for(var i=0; i<todos.length; i++) {%> 
+                <li class="todo"> 
+                    <span><%= todos[i].name %></span> 
+                    <span><%= todos[i].todo %></span> 
+                    <a href="/delete/<%= todos[i]._id %>"  >delete</a>
+                    <a href="/edit/<%= todos[i]._id %>"  >edit</a>
+                </li> 
+            <% } %>
+        </ul>
+    </body>
+
+</html>
+
+
+
