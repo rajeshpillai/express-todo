@@ -26,9 +26,6 @@ var url = "mongodb://localhost:27017/todos";
 MongoClient.connect(url, (err, database) => {
     if (err) return console.log(err);
     db = database;
-
-
-   
     app.listen(port, function () {
         console.log(`Listening on port ${port}`);
     });
