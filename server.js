@@ -20,30 +20,42 @@ app.use(bodyParser.urlencoded({
 
 var db;
 
-var url = "mongodb://mongouser:mongouser123@ds019668.mlab.com:19668/raj-todos";
+//var url = "mongodb://mongouser:mongouser123@ds019668.mlab.com:19668/raj-todos";
+var url = "mongodb://localhost:27017/todos";
 
 MongoClient.connect(url, (err, database) => {
     if (err) return console.log(err);
     db = database;
 
+
+   
     app.listen(port, function () {
         console.log(`Listening on port ${port}`);
     });
 
 });
 
-
-
-app.get("/", function (req, res) {
-    var cursor = db.collection("todos")
-        .find()
-        .toArray(function(err, results) {
-            if (err) console.log(err);
-            res.render("index.ejs", {todos: results});
-        });
-    //res.sendFile(__dirname + "/index.html");
-    
+// Make our db accessible to our router
+app.use(function(req,res,next){
+    req.db = db;
+    next();
 });
+
+var homeController = require("./controllers/home");
+
+// app.get("/", function (req, res) {
+    
+//     var cursor = db.collection("todos")
+//         .find()
+//         .toArray(function(err, results) {
+//             if (err) console.log(err);
+//             res.render("index.ejs", {todos: results});
+//         });
+//     /////res.sendFile(__dirname + "/index.html");
+    
+// });
+
+app.get("/", homeController);
 
 app.get("/delete/:id", function (req, res) {
     console.log("deleting todo with id: ", req.params.id);
